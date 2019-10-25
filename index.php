@@ -25,9 +25,9 @@
 
         
     $resultParsed = json_decode($result, true);
-    print_r($resultParsed["list"]);
+    //print_r($resultParsed["list"]);
 $i = 0;
-    echo "<pre>";
+    //echo "<pre>";
     foreach ($resultParsed["list"] as $value) {
         $Array2[$i] = ($value);
         $ArticleURL = preg_replace(
@@ -62,7 +62,7 @@ $i = 0;
         echo "</pre>"; */
         $i++;
     }
-    echo "</pre>";
+    //echo "</pre>";
     //print_r($Array2[142]);
     
    
@@ -161,81 +161,3 @@ mail($to,$subject,$message,$headers);
     
 
 ?>
-
-<!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title></title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> 
-
-	<link rel="stylesheet" href="gridiculous.css">
-    <script src="isotope.pkgd.js"></script>
-    <script src="jquery-1.8.3.min.js"></script>
-    
-    <style type="text/css">
-        .c3{
-            background-color: #ffd800;
-            margin-bottom: 5px;
-            margin-top: 5px;
-            padding-bottom: 7px;
-            padding-top: 7px;
-            margin-left: 5px;
-            margin-right: 5px;
-            
-        }
-        .grid-item{
-            max-width: 320px;
-            min-width: 320px;
-            background-image: url(http://www.jahedulislam.com/images/wood%20_texture44.jpg);
-            margin: 10px;
-            height: 340px;
-        }
-        .grid.js-isotope {
-            margin: 0 auto;
-            width: 90%;
-            
-        }
-        body{
-            background-image: url(http://www.jahedulislam.com/images/Wood_05_UV_H_CM_1.jpg);
-        }
-        articletitle{
-            font-size: 4vw;
-        }
-
-</style>
-    
-</head>
-<body>
-           <pre>
-    <?php
-        print_r($actions_array);
-    ?>
-</pre>
-            <div class="grid js-isotope"
-  data-isotope-options='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 40, "isFitWidth": true } }'>
-  <script type="text/javascript">
-  </script>
-                <?php $i = 0;?>
-                <?php foreach($Array2 as $value){ ?>
-                    <?php if($i<40){?><div class="grid-item" style="background-image: url(http://www.jahedulislam.com/images/wood%20_texture44.jpg)">
-                    <strong><?php  $i++; echo($value["resolved_title"]." ");?></strong> </br>
-                    <img src="<?php echo $value["favicon_url"] ; ?>" alt="Domain Favicon" style="float: left"> </img> <?php echo $value["article_domain"];?> </br>
-                    <strong>Date Added: </strong> <?php echo(date('m/d/y', $value["time_added"]));?> </br>
-                    <strong>URL: </strong> <a href="<?php echo($value["given_url"]." ");?>" target="_blank"> <?php echo($value["given_url"]." ");?> </a></br>
-                    <strong>Word Count: </strong><?php echo($value["word_count"]." ");?></small> </br>
-                    <div class="grid-sizer"></div>
-                
-				</div>    
-                <?php }?>
-                <?php } ?>
-</div>
-       
-</body>
-</html>
