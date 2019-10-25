@@ -90,6 +90,21 @@ $i = 0;
 $to = "rony.islam1295@gmail.com";
 $subject = "Link Drop 6/21/19";
 
+$links="";
+
+$i = 0;
+foreach($Array2 as $value){ 
+if($i<40){
+     $i++; 
+     $links .= $value["resolved_title"]." ";
+     $links .= "<br>";
+     $links .= "Approx. Reading Time: ".round($value["word_count"]/250,1)." minutes ";
+     $links .= "<br>";
+     $links .= $value["given_url"]." ";
+     $links .= "<br><br>";
+}
+}
+
 $message = "
 <html>
 <head>
@@ -98,7 +113,7 @@ $message = "
 <body>
 <p>Hey there! Here is Rony's Semi-Daily Link Drop for June 21, 2019.</p>
 
-<p>https://lifehacker.com/why-leaving-work-undone-can-make-you-a-better-employee-1835652698 https://www.nytimes.com/interactive/2019/06/19/climate/us-air-pollution-trump.html https://www.nytimes.com/interactive/2019/06/18/upshot/cities-across-america-question-single-family-zoning.html https://lifehacker.com/low-maintenance-plants-are-actually-terrible-for-beginn-1835496440 https://www.nytimes.com/2019/06/18/nyregion/greenhouse-gases-ny.html https://parenting.nytimes.com/health/fatherhood-mens-bodies https://www.fastcompany.com/90353282/76-major-companies-are-in-d-c-today-asking-congress-for-a-price-on-carbon https://www.vox.com/the-goods/2019/3/26/18255131/moving-midwest-cedar-rapids</p>
+$links
 
 <p>This *should* get better over time...maybe. </p>
 
@@ -181,6 +196,7 @@ mail($to,$subject,$message,$headers);
                     <strong><?php  $i++; echo($value["resolved_title"]." ");?></strong> </br>
                     <img src="<?php echo $value["favicon_url"] ; ?>" alt="Domain Favicon" style="float: left"> </img> <?php echo $value["article_domain"];?> </br>
                     <strong>Date Added: </strong> <?php echo(date('m/d/y', $value["time_added"]));?> </br>
+                    <strong>URL: </strong> <a href="<?php echo($value["given_url"]." ");?>" target="_blank"> <?php echo($value["given_url"]." ");?> </a></br>
                     <strong>Word Count: </strong><?php echo($value["word_count"]." ");?></small> </br>
                     <div class="grid-sizer"></div>
                 
