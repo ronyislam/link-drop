@@ -9,9 +9,10 @@
     $data = array(
 	    'consumer_key' => $consumer_key, 
 	    'access_token' => $access_token,
-        'count' => '30',
-        'since' => '',
-        'detailType' => 'complete'
+         'count' => '30',
+         'tag'=> '_untagged_',
+         'since' => '',
+         'detailType' => 'complete'
     );
     $options = array(
 	    'http' => array(
@@ -21,8 +22,8 @@
     );
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
-    //print_r($result);
-    
+
+        
     $resultParsed = json_decode($result, true);
     print_r($resultParsed["list"]);
 $i = 0;
@@ -88,14 +89,21 @@ $i = 0;
 
 
 $to = "rony.islam1295@gmail.com";
-$subject = "Link Drop 6/21/19";
+$subject = "Link Drop ".date("m/d/Y");
 
 $links="";
+$actions_array=[];
 
 $i = 0;
 foreach($Array2 as $value){ 
 if($i<40){
      $i++; 
+     $actions_item=array(
+        "action" => "tags_add",
+        "item_id" => $value["item_id"],
+        "tags" => "link-dropped"
+     );
+     $actions_array[]=$actions_item;
      $links .= $value["resolved_title"]." ";
      $links .= "<br>";
      $links .= "Approx. Reading Time: ".round($value["word_count"]/250,1)." minutes ";
@@ -104,14 +112,15 @@ if($i<40){
      $links .= "<br><br>";
 }
 }
+$actions_array = json_encode($actions_array);
 
 $message = "
 <html>
 <head>
-<title>Link Drop for June 21, 2019</title>
+<title>Link Drop ". date("M j, Y")."</title>
 </head>
 <body>
-<p>Hey there! Here is Rony's Semi-Daily Link Drop for June 21, 2019.</p>
+<p>Hey there! Here is Rony's Semi-Daily Link Drop for ". date("M j, Y").".</p>
 
 $links
 
@@ -132,6 +141,24 @@ $headers .= 'From: <rony.islam1295@gmail.com>' . "\r\n";
 
 mail($to,$subject,$message,$headers);
 
+
+    $url = 'https://getpocket.com/v3/send?';
+    $data = array(
+	    'consumer_key' => $consumer_key, 
+	    'access_token' => $access_token,
+         'actions' => $actions_array
+    );
+    $options = array(
+	    'http' => array(
+		    'method'  => 'POST',
+		    'content' => http_build_query($data)
+	    )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    $resultParsed = json_decode($result, true);
+    print_r($resultParsed);
+    
 
 ?>
 
@@ -186,6 +213,11 @@ mail($to,$subject,$message,$headers);
     
 </head>
 <body>
+           <pre>
+    <?php
+        print_r($actions_array);
+    ?>
+</pre>
             <div class="grid js-isotope"
   data-isotope-options='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 40, "isFitWidth": true } }'>
   <script type="text/javascript">
