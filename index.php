@@ -5,13 +5,13 @@
 	    pocket items.
 	    read more here: http://getpocket.com/developer/docs/v3/retrieve
 	    */
+    $twoWeeksAgo = time() - (14 * 24 * 60 * 60);
     $url = 'https://getpocket.com/v3/get?';
     $data = array(
 	    'consumer_key' => $consumer_key, 
 	    'access_token' => $access_token,
-         'count' => '30',
+         'since' => $twoWeeksAgo,
          'tag'=> '_untagged_',
-         'since' => '',
          'detailType' => 'complete'
     );
     $options = array(
@@ -25,9 +25,14 @@
 
         
     $resultParsed = json_decode($result, true);
-    //print_r($resultParsed["list"]);
+    print_r($resultParsed["list"]);
+if(count($resultParsed["list"])<5){
+     echo("abort abort");
+     exit();
+}
+
 $i = 0;
-    //echo "<pre>";
+    echo "<pre>";
     foreach ($resultParsed["list"] as $value) {
         $Array2[$i] = ($value);
         $ArticleURL = preg_replace(
@@ -62,7 +67,7 @@ $i = 0;
         echo "</pre>"; */
         $i++;
     }
-    //echo "</pre>";
+    echo "</pre>";
     //print_r($Array2[142]);
     
    
@@ -88,7 +93,7 @@ $i = 0;
 
 
 
-$to = "rony.islam1295@gmail.com";
+$to = "rony.islam1295@gmail.com, delgiar@gmail.com";
 $subject = "Link Drop ".date("m/d/Y");
 
 $links="";
@@ -106,8 +111,11 @@ if($i<40){
      $actions_array[]=$actions_item;
      $links .= $value["resolved_title"]." ";
      $links .= "<br>";
-     $links .= "Approx. Reading Time: ".round($value["word_count"]/250,1)." minutes ";
-     $links .= "<br>";
+     if($value["word_count"]>0){
+          $links .= "Approx. Reading Time: ".round($value["word_count"]/210,1)." minutes ";
+          $links .= "<br>";     
+     }
+     
      $links .= $value["given_url"]." ";
      $links .= "<br><br>";
 }
